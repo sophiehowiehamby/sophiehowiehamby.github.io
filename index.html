@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookstore Homepage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F7F0FF;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #E0BBE4;
+            padding: 10px;
+            text-align: center;
+        }
+        nav {
+            width: 200px;
+            float: left;
+            padding: 15px;
+        }
+        nav a {
+            display: block;
+            padding: 10px;
+            margin-bottom: 5px;
+            background-color: #C2D3E2;
+            color: #5B5C7A;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        nav a:hover {
+            background-color: #B2C6D8;
+        }
+        .content {
+            margin-left: 220px;
+            padding: 15px;
+        }
+        .search {
+            margin-bottom: 15px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        footer {
+            background-color: #E0BBE4;
+            padding: 10px;
+            text-align: center;
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Our Online Bookstore</h1>
+    </header>
+    <nav>
+        <input type="text" placeholder="Search..." class="search">
+        <a href="#children">Children's Books</a>
+        <a href="#new">New Books</a>
+        <a href="#used">Used Books</a>
+    </nav>
+    <div class="content">
+        <div class="section" id="children">
+            <h2>Children's Books</h2>
+            <p>Explore a variety of fun and educational books for children!</p>
+        </div>
+        <div class="section" id="new">
+            <h2>New Books</h2>
+            <p>Check out the latest releases from popular authors!</p>
+        </div>
+        <div class="section" id="used">
+            <h2>Used Books</h2>
+            <p>Discover great deals on gently used books.</p>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2026 Online Bookstore</p>
+    </footer>
+</body>
+</html>
