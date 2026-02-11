@@ -3,81 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bookstore Homepage</title>
+    <title>Homepage</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #F7F0FF;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #E0BBE4;
-            padding: 10px;
-            text-align: center;
-        }
-        nav {
-            width: 200px;
-            float: left;
-            padding: 15px;
-        }
-        nav a {
-            display: block;
-            padding: 10px;
-            margin-bottom: 5px;
-            background-color: #C2D3E2;
-            color: #5B5C7A;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        nav a:hover {
-            background-color: #B2C6D8;
-        }
-        .content {
-            margin-left: 220px;
-            padding: 15px;
-        }
-        .search {
-            margin-bottom: 15px;
-        }
-        .section {
-            margin-bottom: 20px;
-        }
-        footer {
-            background-color: #E0BBE4;
-            padding: 10px;
-            text-align: center;
-            clear: both;
-        }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        header { background-color: #E8D9F2; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
+        h1 { color: #2BA878; }
+        .search-bar { margin: 0 20px; }
+        .cart-icon { position: relative; }
+        .cart-count { position: absolute; top: -10px; right: -10px; background: red; color: white; border-radius: 50%; padding: 2px 5px; }
+        .sidebar { width: 200px; float: left; background-color: #E8D9F2; padding: 20px; height: 100vh; }
+        .sidebar a { display: block; margin: 10px 0; color: #2BA878; text-decoration: none; }
+        .featured-books { margin-left: 220px; padding: 20px; }
+        .featured-book { margin: 20px 0; padding: 10px; border: 1px solid #2BA878; }
+        footer { clear: both; padding: 20px; text-align: center; background-color: #E8D9F2; }
     </style>
 </head>
 <body>
     <header>
-        <h1>Welcome to Our Online Bookstore</h1>
+        <h1>Online Bookstore</h1>
+        <input type="text" placeholder="Search..." class="search-bar">
+        <div class="cart-icon">
+            🛒 <span class="cart-count">0</span>
+        </div>
     </header>
-    <nav>
-        <input type="text" placeholder="Search..." class="search">
-        <a href="#children">Children's Books</a>
-        <a href="#new">New Books</a>
-        <a href="#used">Used Books</a>
-    </nav>
-    <div class="content">
-        <div class="section" id="children">
+    <div class="sidebar">
+        <a href="#children-books">Children's Books</a>
+        <a href="#new-books">New Books</a>
+        <a href="#used-books">Used Books</a>
+        <a href="#about">About</a>
+    </div>
+    <div class="featured-books">
+        <section id="children-books" class="featured-book">
             <h2>Children's Books</h2>
-            <p>Explore a variety of fun and educational books for children!</p>
-        </div>
-        <div class="section" id="new">
+            <p>Explore a wide range of children's literature.</p>
+        </section>
+        <section id="new-books" class="featured-book">
             <h2>New Books</h2>
-            <p>Check out the latest releases from popular authors!</p>
-        </div>
-        <div class="section" id="used">
+            <p>Check out our latest arrivals!</p>
+        </section>
+        <section id="used-books" class="featured-book">
             <h2>Used Books</h2>
-            <p>Discover great deals on gently used books.</p>
-        </div>
+            <p>Find quality used books at great prices.</p>
+        </section>
+        <section id="about" class="featured-book">
+            <h2>About Us</h2>
+            <p>Learn more about our mission and vision.</p>
+        </section>
     </div>
     <footer>
-        <p>&copy; 2026 Online Bookstore</p>
+        <p>&copy; 2026 Online Bookstore. All rights reserved.</p>
     </footer>
 </body>
 </html>
