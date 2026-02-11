@@ -1,0 +1,47 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: white;
+    color: #333;
+}
+
+h1, h2, h3 {
+    color: #9b59b6; /* Light Purple */
+}
+
+p {
+    margin: 0 0 15px;
+}
+
+.header {
+    background: #9b59b6; /* Light Purple */
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.button {
+    background-color: #27ae60; /* Green */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.button:hover {
+    background-color: #219653; /* Darker Green */
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+}
