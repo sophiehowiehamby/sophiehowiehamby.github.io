@@ -3,53 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Results</title>
     <link rel="stylesheet" href="styles.css">
+    <title>eCommerce Product Grid</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #E8D9F2;
+            color: #333;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 15px;
+            text-align: center;
+        }
+        .cart-sidebar {
+            position: fixed;
+            right: -300px;
+            top: 0;
+            width: 300px;
+            height: 100%;
+            background: white;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+            transition: right 0.3s;
+        }
+        .cart-sidebar.active {
+            right: 0;
+        }
+        .btn {
+            background-color: #2BA878;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .filter {
+            padding: 20px;
+            background: #E8D9F2;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Search Results</h1>
-        <div id="cart-sidebar">
-            <h2>Cart</h2>
-            <div id="cart-items"></div>
-            <p>Total: <span id="cart-total"></span></p>
+    <div class="filter">
+        <h2>Filter by Category</h2>
+        <select id="categoryFilter" onchange="filterProducts()">
+            <option value="all">All Categories</option>
+            <option value="children">Children's Books</option>
+            <option value="new">New</option>
+            <option value="used">Used</option>
+        </select>
+    </div>
+    <div class="grid-container" id="productGrid">
+        <!-- Sample data for products -->
+        <div class="product-card" data-category="children">
+            <h3>Children's Book 1</h3>
+            <p>Description of the first children's book.</p>
+            <button class="btn" onclick="addToCart('Children's Book 1')">Add to Cart</button>
         </div>
-    </header>
-
-    <main>
-        <div id="product-grid">
-            <div class="product">
-                <h3>Book Title 1</h3>
-                <p>Author: Author 1</p>
-                <p>Price: $10.00</p>
-                <button onclick="addToCart(1)">Add to Cart</button>
-            </div>
-            <div class="product">
-                <h3>Book Title 2</h3>
-                <p>Author: Author 2</p>
-                <p>Price: $15.00</p>
-                <button onclick="addToCart(2)">Add to Cart</button>
-            </div>
-            <!-- Add more products as needed -->
+        <div class="product-card" data-category="new">
+            <h3>New Book 1</h3>
+            <p>Description of the first new book.</p>
+            <button class="btn" onclick="addToCart('New Book 1')">Add to Cart</button>
         </div>
-    </main>
-
+        <div class="product-card" data-category="used">
+            <h3>Used Book 1</h3>
+            <p>Description of the first used book.</p>
+            <button class="btn" onclick="addToCart('Used Book 1')">Add to Cart</button>
+        </div>
+        <!-- More product cards can be added here -->
+    </div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <h2>Shopping Cart</h2>
+        <div id="cartItems"></div>
+        <button class="btn" onclick="toggleCart()">Close Cart</button>
+    </div>
     <script>
         let cart = [];
-        let total = 0;
 
-        function addToCart(productId) {
-            const productName = document.querySelector(`.product:nth-child(${productId}) h3`).innerText;
-            const productPrice = parseFloat(document.querySelector(`.product:nth-child(${productId}) p:nth-child(3)`).innerText.replace('$', ''));
-            cart.push({ name: productName, price: productPrice });
-            total += productPrice;
-            updateCartDisplay();
+        function addToCart(product) {
+            cart.push(product);
+            updateCart();
+            toggleCart();
         }
 
-        function updateCartDisplay() {
-            const cartItemsDiv = document.getElementById('cart-items');
-            cartItemsDiv.innerHTML = cart.map(item => `<p>${item.name}: $${item.price.toFixed(2)}</p>`).join('');
-            document.getElementById('cart-total').innerText = `$${total.toFixed(2)}`;
+        function updateCart() {
+            const cartItemsDiv = document.getElementById('cartItems');
+            cartItemsDiv.innerHTML = '';
+            cart.forEach(item => {
+                cartItemsDiv.innerHTML += `<p>${item}</p>`;
+            });
+        }
+
+        function toggleCart() {
+            const cartSidebar = document.getElementById('cartSidebar');
+            cartSidebar.classList.toggle('active');
+        }
+
+        function filterProducts() {
+            const filterValue = document.getElementById('categoryFilter').value;
+            const products = document.querySelectorAll('.product-card');
+            products.forEach(product => {
+                if (filterValue === 'all' || product.dataset.category === filterValue) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
         }
     </script>
 </body>
