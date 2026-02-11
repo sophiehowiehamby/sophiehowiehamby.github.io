@@ -3,75 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Search Results</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-        }
-        .product {
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            overflow: hidden;
-            transition: transform 0.2s;
-        }
-        .product:hover {
-            transform: scale(1.05);
-        }
-        .product img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-        }
-        .product-details {
-            padding: 10px;
-        }
-        .product-title {
-            font-size: 1.2em;
-            margin: 0;
-            color: #333;
-        }
-        .product-price {
-            font-size: 1em;
-            color: #888;
-        }
-    </style>
+    <title>Search Results</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Search Results</h1>
-    <div class="container">
-        <div class="product">
-            <img src="book1.jpg" alt="Book 1">
-            <div class="product-details">
-                <h2 class="product-title">Book Title 1</h2>
-                <p class="product-price">$19.99</p>
-            </div>
+    <header>
+        <h1>Search Results</h1>
+        <div id="cart-sidebar">
+            <h2>Cart</h2>
+            <div id="cart-items"></div>
+            <p>Total: <span id="cart-total"></span></p>
         </div>
-        <div class="product">
-            <img src="book2.jpg" alt="Book 2">
-            <div class="product-details">
-                <h2 class="product-title">Book Title 2</h2>
-                <p class="product-price">$9.99</p>
+    </header>
+
+    <main>
+        <div id="product-grid">
+            <div class="product">
+                <h3>Book Title 1</h3>
+                <p>Author: Author 1</p>
+                <p>Price: $10.00</p>
+                <button onclick="addToCart(1)">Add to Cart</button>
             </div>
-        </div>
-        <div class="product">
-            <img src="book3.jpg" alt="Book 3">
-            <div class="product-details">
-                <h2 class="product-title">Book Title 3</h2>
-                <p class="product-price">$14.99</p>
+            <div class="product">
+                <h3>Book Title 2</h3>
+                <p>Author: Author 2</p>
+                <p>Price: $15.00</p>
+                <button onclick="addToCart(2)">Add to Cart</button>
             </div>
+            <!-- Add more products as needed -->
         </div>
-        <!-- Add more product elements as needed -->
-    </div>
+    </main>
+
+    <script>
+        let cart = [];
+        let total = 0;
+
+        function addToCart(productId) {
+            const productName = document.querySelector(`.product:nth-child(${productId}) h3`).innerText;
+            const productPrice = parseFloat(document.querySelector(`.product:nth-child(${productId}) p:nth-child(3)`).innerText.replace('$', ''));
+            cart.push({ name: productName, price: productPrice });
+            total += productPrice;
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+            const cartItemsDiv = document.getElementById('cart-items');
+            cartItemsDiv.innerHTML = cart.map(item => `<p>${item.name}: $${item.price.toFixed(2)}</p>`).join('');
+            document.getElementById('cart-total').innerText = `$${total.toFixed(2)}`;
+        }
+    </script>
 </body>
 </html>
