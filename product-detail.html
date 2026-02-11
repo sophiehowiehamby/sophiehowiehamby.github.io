@@ -4,18 +4,114 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Detail</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #FFFFFF;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #E8D9F2;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav {
+            display: flex;
+            gap: 15px;
+        }
+        .sidebar {
+            width: 250px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background-color: #E8D9F2;
+            padding: 20px;
+        }
+        .main {
+            margin-left: 300px;
+            padding: 20px;
+        }
+        .product {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .cart {
+            position: fixed;
+            right: -300px;
+            top: 0;
+            width: 300px;
+            height: 100%;
+            background-color: #E8D9F2;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+            transition: right 0.3s;
+        }
+        .cart.open {
+            right: 0;
+        }
+        footer {
+            background-color: #E8D9F2;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+        }
+    </style>
 </head>
 <body>
-    <div class="product-detail">
-        <img src="book-image.jpg" alt="Book Image" class="product-image">
-        <h1 class="product-title">The Great Gatsby</h1>
-        <p class="product-price">$10.99</p>
-        <p class="product-description">
-            A novel written by American author F. Scott Fitzgerald that tells the story of Jay Gatsby's,
-            a wealthy man, obsession with the beautiful Daisy Buchanan.
-        </p>
-        <button class="add-to-cart">Add to Cart</button>
+    <header>
+        <div class="logo">Logo</div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Browse</a>
+            <a href="#">Categories</a>
+            <a href="#">About</a>
+        </nav>
+        <div class="search">
+            <input type="text" placeholder="Search...">
+        </div>
+    </header>
+    <div class="sidebar">
+        <h3>Navigation</h3>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Browse</a></li>
+            <li><a href="#">Categories</a></li>
+            <li><a href="#">About</a></li>
+        </ul>
     </div>
+    <div class="main">
+        <div class="product">
+            <img src="product-emoji.png" alt="Product Emoji" />
+            <h1>Product Title</h1>
+            <p>Author: Product Author</p>
+            <p>Price: $XX.XX</p>
+            <p>Description: Product description goes here.</p>
+            <button>Add to Cart</button>
+        </div>
+        <div class="cart" id="cart">
+            <h3>Cart Items</h3>
+            <div id="cart-items">
+                <!-- Cart items will be dynamically loaded here -->
+            </div>
+            <button>Checkout</button>
+        </div>
+    </div>
+    <footer>
+        &copy; 2026 Your Company
+    </footer>
+    <script>
+        // JavaScript functionality to load product data and manage cart
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load product data from localStorage
+            // Manage cart operations
+            // Handle navigation between pages
+        });
+    </script>
 </body>
 </html>
