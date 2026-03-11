@@ -3,14 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Purchase Success</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Order Confirmed - Online Bookstore</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #F7F5FA; color: #333; }
+        header { background-color: #E8D9F2; padding: 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        header h1 { color: #2BA878; font-size: 28px; cursor: pointer; }
+        .content { max-width: 700px; margin: 40px auto; padding: 0 20px; }
+        .success-banner { background: linear-gradient(135deg, #2BA878, #1e8a5f); color: white; border-radius: 12px; padding: 40px; text-align: center; margin-bottom: 30px; }
+        .success-icon { font-size: 64px; margin-bottom: 15px; }
+        .success-banner h2 { font-size: 30px; margin-bottom: 10px; }
+        .success-banner p { font-size: 16px; opacity: 0.9; }
+        .card { background: white; border-radius: 8px; padding: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 25px; }
+        .card h3 { color: #9B7BA8; font-size: 18px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #E8D9F2; }
+        .order-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #F7F5FA; }
+        .order-item:last-child { border-bottom: none; }
+        .order-item-info { flex: 1; }
+        .order-item-title { font-size: 15px; font-weight: 600; }
+        .order-item-author { font-size: 13px; color: #888; }
+        .order-item-price { font-size: 15px; color: #2BA878; font-weight: bold; }
+        .total-row { display: flex; justify-content: space-between; font-size: 18px; font-weight: bold; margin-top: 15px; padding-top: 15px; border-top: 2px solid #E8D9F2; }
+        .total-row span:last-child { color: #2BA878; }
+        .shipping-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .shipping-field label { font-size: 12px; font-weight: 600; color: #9B7BA8; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 4px; }
+        .shipping-field span { font-size: 15px; color: #333; }
+        .btn-home { display: block; width: 100%; padding: 15px; background-color: #2BA878; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; text-align: center; text-decoration: none; transition: background-color 0.3s; }
+        .btn-home:hover { background-color: #1e8a5f; }
+        footer { background-color: #E8D9F2; padding: 20px; text-align: center; color: #666; margin-top: 40px; }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Thank You for Your Purchase!</h1>
-        <p>Your purchase was successful.</p>
-        <a href="index.html">Return to Home Page</a>
+    <header>
+        <h1 onclick="window.location.href='index.html'">📚 BookStore</h1>
+    </header>
+
+    <div class="content">
+        <div class="success-banner">
+            <div class="success-icon">🎉</div>
+            <h2>Order Confirmed!</h2>
+            <p>Thank you for your purchase. Your books are on their way!</p>
+        </div>
+
+        <div class="card" id="orderSummaryCard">
+            <h3>📦 Order Summary</h3>
+            <div id="orderItems"></div>
+        </div>
+
+        <div class="card" id="shippingCard">
+            <h3>🚚 Shipping Details</h3>
+            <div class="shipping-grid" id="shippingDetails"></div>
+        </div>
+
+        <button class="btn-home" onclick="returnHome()">🏠 Return to Home</button>
     </div>
+
+    <footer>
+        <p>&copy; 2026 Online Bookstore. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function renderOrderSummary() {
+            const cart = JSON.parse(localStorage.getItem('cartItems') || '[]');
+            const container = document.getElementById('orderItems');
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p style="color:#888;text-align:center;padding:10px">No items found.</p>';
+                document.querySelector('.total-row') && document.querySelector('.total-row').remove();
+                return;
+            }
+
+            let total = 0;
+            cart.forEach(item => {
+                total += item.price;
+                const div = document.createElement('div');
+                div.className = 'order-item';
+                div.innerHTML = `
+                    <div class="order-item-info">
+                        <div class="order-item-title">${item.emoji ? item.emoji + ' ' : ''}${item.title}</div>
+                        <div class="order-item-author">${item.author}</div>
+                    </div>
+                    <div class="order-item-price">$${item.price.toFixed(2)}</div>
+                `;
+                container.appendChild(div);
+            });
+
+            const totalRow = document.createElement('div');
+            totalRow.className = 'total-row';
+            totalRow.innerHTML = `<span>Total Paid</span><span>$${total.toFixed(2)}</span>`;
+            container.appendChild(totalRow);
+        }
+
+        function renderShippingDetails() {
+            const data = JSON.parse(localStorage.getItem('checkoutData') || '{}');
+            const container = document.getElementById('shippingDetails');
+
+            if (!data || !data.name) {
+                container.innerHTML = '<p style="color:#888">No shipping information available.</p>';
+                return;
+            }
+
+            const fields = [
+                { label: 'Name', value: data.name },
+                { label: 'Email', value: data.email },
+                { label: 'Phone', value: data.phone || '—' },
+                { label: 'Street', value: data.street },
+                { label: 'City', value: data.city },
+                { label: 'State', value: data.state },
+                { label: 'ZIP', value: data.zip },
+                { label: 'Country', value: data.country }
+            ];
+
+            fields.forEach(f => {
+                const div = document.createElement('div');
+                div.className = 'shipping-field';
+                div.innerHTML = `<label>${f.label}</label><span>${f.value}</span>`;
+                container.appendChild(div);
+            });
+        }
+
+        function returnHome() {
+            localStorage.removeItem('cartItems');
+            localStorage.removeItem('checkoutData');
+            localStorage.removeItem('selectedBookId');
+            window.location.href = 'index.html';
+        }
+
+        renderOrderSummary();
+        renderShippingDetails();
+    </script>
 </body>
 </html>
