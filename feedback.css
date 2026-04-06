@@ -1,0 +1,59 @@
+/* Feedback Tab */
+.feedback-tab {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%) rotate(180deg);
+    z-index: 900;
+    background-color: #9B7BA8;
+    color: white;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    padding: 16px 10px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    border-radius: 6px 0 0 6px;
+    border: none;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.2s;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.feedback-tab:hover {
+    background-color: #2BA878;
+}
+
+/* Feedback Drawer */
+.feedback-drawer {
+    position: fixed;
+    top: 0;
+    right: -320px;
+    width: 320px;
+    height: 100vh;
+    background: white;
+    box-shadow: -4px 0 16px rgba(0, 0, 0, 0.12);
+    z-index: 1000;
+    transition: right 0.3s ease;
+}
+
+.feedback-drawer.open {
+    right: 0;
+}
+
+.feedback-close-btn {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #aaa;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.feedback-close-btn:hover {
+    color: #555;
+}
