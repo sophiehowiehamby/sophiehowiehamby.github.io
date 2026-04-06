@@ -239,35 +239,8 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
 <!-- Feedback Tab -->
 <link rel="stylesheet" href="feedback.css">
 <button class="feedback-tab" id="feedbackTab" aria-label="Open feedback form">Feedback</button>
-<div class="feedback-overlay" id="feedbackOverlay" role="dialog" aria-modal="true" aria-label="Feedback">
-    <div class="feedback-modal">
-        <button class="feedback-close-btn" id="feedbackCloseBtn" aria-label="Close feedback">&#x2715;</button>
-        <h2>Share Your Feedback</h2>
-        <p>We'd love to hear what you think!</p>
-        <form id="feedbackForm">
-            <label for="feedbackType">Type of feedback</label>
-            <select id="feedbackType" name="feedbackType">
-                <option value="">Select...</option>
-                <option value="general">General</option>
-                <option value="bug">Bug report</option>
-                <option value="suggestion">Suggestion</option>
-                <option value="compliment">Compliment</option>
-            </select>
-            <label for="feedbackMessage">Your message</label>
-            <textarea id="feedbackMessage" name="feedbackMessage" placeholder="Tell us what's on your mind..." required></textarea>
-            <label for="feedbackEmail">Email (optional)</label>
-            <input type="email" id="feedbackEmail" name="feedbackEmail" placeholder="you@example.com">
-            <div class="feedback-modal-actions">
-                <button type="button" class="feedback-cancel-btn" id="feedbackCancelBtn">Cancel</button>
-                <button type="submit" class="feedback-submit-btn">Submit</button>
-            </div>
-        </form>
-        <div class="feedback-success-msg" id="feedbackSuccessMsg">
-            <div class="feedback-checkmark">&#10003;</div>
-            <h3>Thank you!</h3>
-            <p>Your feedback has been received.</p>
-        </div>
-    </div>
+<div class="feedback-drawer" id="feedbackDrawer" aria-label="Feedback">
+    <button class="feedback-close-btn" id="feedbackCloseBtn" aria-label="Close feedback">&#x2715;</button>
 </div>
 <script src="feedback.js"></script>
 <!-- Script start -->

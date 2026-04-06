@@ -25,115 +25,21 @@
     background-color: #2BA878;
 }
 
-/* Feedback Modal Overlay */
-.feedback-overlay {
-    display: none;
+/* Feedback Drawer */
+.feedback-drawer {
     position: fixed;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.45);
-    z-index: 1100;
-    justify-content: center;
-    align-items: center;
-}
-
-.feedback-overlay.open {
-    display: flex;
-}
-
-/* Feedback Modal */
-.feedback-modal {
+    top: 0;
+    right: -320px;
+    width: 320px;
+    height: 100vh;
     background: white;
-    border-radius: 10px;
-    padding: 32px 28px;
-    width: 100%;
-    max-width: 420px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
-    position: relative;
+    box-shadow: -4px 0 16px rgba(0, 0, 0, 0.12);
+    z-index: 1000;
+    transition: right 0.3s ease;
 }
 
-.feedback-modal h2 {
-    font-size: 20px;
-    color: #9B7BA8;
-    margin-bottom: 6px;
-}
-
-.feedback-modal p {
-    font-size: 13px;
-    color: #777;
-    margin-bottom: 20px;
-}
-
-.feedback-modal label {
-    display: block;
-    font-size: 13px;
-    font-weight: 600;
-    color: #444;
-    margin-bottom: 5px;
-}
-
-.feedback-modal input,
-.feedback-modal textarea,
-.feedback-modal select {
-    width: 100%;
-    padding: 9px 12px;
-    border: 1.5px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-    font-family: inherit;
-    margin-bottom: 14px;
-    transition: border-color 0.2s;
-    box-sizing: border-box;
-}
-
-.feedback-modal input:focus,
-.feedback-modal textarea:focus,
-.feedback-modal select:focus {
-    outline: none;
-    border-color: #9B7BA8;
-}
-
-.feedback-modal textarea {
-    resize: vertical;
-    min-height: 90px;
-}
-
-.feedback-modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 4px;
-}
-
-.feedback-cancel-btn {
-    padding: 9px 20px;
-    background: #f0eaf5;
-    color: #9B7BA8;
-    border: none;
-    border-radius: 5px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.feedback-cancel-btn:hover {
-    background: #E8D9F2;
-}
-
-.feedback-submit-btn {
-    padding: 9px 20px;
-    background: #2BA878;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.feedback-submit-btn:hover {
-    background: #1e8a5f;
+.feedback-drawer.open {
+    right: 0;
 }
 
 .feedback-close-btn {
@@ -150,26 +56,4 @@
 
 .feedback-close-btn:hover {
     color: #555;
-}
-
-.feedback-success-msg {
-    display: none;
-    text-align: center;
-    padding: 20px 0 8px;
-}
-
-.feedback-success-msg .feedback-checkmark {
-    font-size: 42px;
-    margin-bottom: 10px;
-}
-
-.feedback-success-msg h3 {
-    color: #2BA878;
-    margin-bottom: 8px;
-}
-
-.feedback-success-msg p {
-    color: #777;
-    font-size: 14px;
-    margin-bottom: 0;
 }
