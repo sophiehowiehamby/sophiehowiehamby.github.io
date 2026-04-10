@@ -67,6 +67,15 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
         .checkout-btn { width: 100%; padding: 12px; background-color: #2BA878; color: white; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; }
         .checkout-btn:hover { background-color: #1e8a5f; }
         .empty-cart { text-align: center; color: #999; padding: 40px 20px; }
+        .cart-recommended { margin-top: 20px; border-top: 2px dashed #E8D9F2; padding-top: 15px; }
+        .cart-recommended-title { font-size: 13px; font-weight: 700; color: #9B7BA8; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .rec-item { display: flex; align-items: center; gap: 10px; background: white; border-radius: 5px; padding: 10px; margin-bottom: 10px; border: 1px solid #E8D9F2; }
+        .rec-item-emoji { font-size: 28px; flex-shrink: 0; }
+        .rec-item-info { flex: 1; min-width: 0; }
+        .rec-item-title { font-size: 12px; font-weight: 600; color: #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .rec-item-price { font-size: 13px; color: #2BA878; font-weight: bold; }
+        .rec-add-btn { padding: 6px 12px; background-color: #2BA878; color: white; border: none; border-radius: 4px; font-size: 12px; font-weight: bold; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+        .rec-add-btn:hover { background-color: #1e8a5f; }
         footer { clear: both; background-color: #E8D9F2; padding: 20px; text-align: center; color: #666; margin-top: 30px; }
         footer a { color: #9B7BA8; text-decoration: none; margin: 0 8px; }
         footer a:hover { color: #2BA878; }
@@ -214,21 +223,52 @@ f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){retu
             if (cart.length === 0) {
                 list.innerHTML = '<div class="empty-cart">Your cart is empty.</div>';
                 total.textContent = '0.00';
-                return;
+            } else {
+                let sum = 0;
+                cart.forEach((item, i) => {
+                    sum += item.price;
+                    const div = document.createElement('div');
+                    div.className = 'cart-item';
+                    div.innerHTML = `
+                        <div class="cart-item-title">${item.title}</div>
+                        <div class="cart-item-price">$${item.price.toFixed(2)}</div>
+                        <button onclick="removeFromCart(${i})" style="background:#E8D9F2;padding:5px 10px;border:none;border-radius:3px;cursor:pointer;margin-top:8px;">Remove</button>
+                    `;
+                    list.appendChild(div);
+                });
+                total.textContent = sum.toFixed(2);
             }
-            let sum = 0;
-            cart.forEach((item, i) => {
-                sum += item.price;
-                const div = document.createElement('div');
-                div.className = 'cart-item';
-                div.innerHTML = `
-                    <div class="cart-item-title">${item.title}</div>
-                    <div class="cart-item-price">$${item.price.toFixed(2)}</div>
-                    <button onclick="removeFromCart(${i})" style="background:#E8D9F2;padding:5px 10px;border:none;border-radius:3px;cursor:pointer;margin-top:8px;">Remove</button>
-                `;
-                list.appendChild(div);
-            });
-            total.textContent = sum.toFixed(2);
+
+            const cartIds = new Set(cart.map(item => item.id));
+            const recommended = getAllBooks().filter(b => !cartIds.has(b.id)).slice(0, 4);
+            if (recommended.length > 0) {
+                const recSection = document.createElement('div');
+                recSection.className = 'cart-recommended';
+                recSection.innerHTML = '<div class="cart-recommended-title">✨ You Might Also Like</div>';
+                recommended.forEach(book => {
+                    const recItem = document.createElement('div');
+                    recItem.className = 'rec-item';
+                    recItem.innerHTML = `
+                        <div class="rec-item-emoji">${book.emoji}</div>
+                        <div class="rec-item-info">
+                            <div class="rec-item-title">${book.title}</div>
+                            <div class="rec-item-price">$${book.price.toFixed(2)}</div>
+                        </div>
+                        <button class="rec-add-btn" onclick="addRecommendedToCart(${book.id})">+ Add</button>
+                    `;
+                    recSection.appendChild(recItem);
+                });
+                list.appendChild(recSection);
+            }
+        }
+
+        function addRecommendedToCart(bookId) {
+            const book = getAllBooks().find(b => b.id === bookId);
+            if (book) {
+                cart.push(book);
+                localStorage.setItem('cartItems', JSON.stringify(cart));
+                updateCartUI();
+            }
         }
 
         function removeFromCart(index) {
