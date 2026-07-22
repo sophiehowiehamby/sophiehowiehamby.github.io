@@ -77,6 +77,17 @@
             color: #ccc;
         }
 
+        .form-group input.error {
+            border-color: #e74c3c;
+            box-shadow: 0 0 8px rgba(231, 76, 60, 0.2);
+        }
+
+        .form-help-text {
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+        }
+
         .login-btn {
             width: 100%;
             padding: 14px;
@@ -182,10 +193,11 @@
                     type="text" 
                     id="userId" 
                     name="userId" 
-                    placeholder="Enter your user ID" 
+                    placeholder="Enter your user ID (e.g., 123-4567)" 
                     required
                     autocomplete="username"
                 >
+                <div class="form-help-text">Format: XXX-XXXX (7 digits with dash)</div>
             </div>
 
             <div class="form-group">
@@ -217,18 +229,36 @@
     </div>
 
     <script>
+        function validateUserIdFormat(userId) {
+            // Pattern: XXX-XXXX (7 digits with dash in the middle)
+            const userIdPattern = /^\d{3}-\d{4}$/;
+            return userIdPattern.test(userId);
+        }
+
         function handleLogin(event) {
             event.preventDefault();
             
-            const userId = document.getElementById('userId').value.trim();
+            const userIdInput = document.getElementById('userId');
+            const userId = userIdInput.value.trim();
             const password = document.getElementById('password').value.trim();
 
-            // Basic validation
+            // Reset error styling
+            userIdInput.classList.remove('error');
+
+            // Validate User ID format
             if (!userId) {
                 alert('Please enter your User ID.');
+                userIdInput.classList.add('error');
                 return;
             }
 
+            if (!validateUserIdFormat(userId)) {
+                alert('User ID is incorrect');
+                userIdInput.classList.add('error');
+                return;
+            }
+
+            // Validate password
             if (!password) {
                 alert('Please enter your password.');
                 return;
