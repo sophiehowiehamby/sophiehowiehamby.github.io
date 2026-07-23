@@ -88,6 +88,17 @@
             margin-top: 5px;
         }
 
+        .error-message {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
         .login-btn {
             width: 100%;
             padding: 14px;
@@ -198,6 +209,7 @@
                     autocomplete="username"
                 >
                 <div class="form-help-text">Format: XXX-XXXX (7 digits with dash)</div>
+                <div class="error-message" id="userIdError"></div>
             </div>
 
             <div class="form-group">
@@ -210,6 +222,7 @@
                     required
                     autocomplete="current-password"
                 >
+                <div class="error-message" id="passwordError"></div>
             </div>
 
             <button type="submit" class="login-btn">Login</button>
@@ -235,37 +248,60 @@
             return userIdPattern.test(userId);
         }
 
+        function clearErrors() {
+            const userIdInput = document.getElementById('userId');
+            const passwordInput = document.getElementById('password');
+            const userIdError = document.getElementById('userIdError');
+            const passwordError = document.getElementById('passwordError');
+
+            userIdInput.classList.remove('error');
+            passwordInput.classList.remove('error');
+            userIdError.classList.remove('show');
+            passwordError.classList.remove('show');
+            userIdError.textContent = '';
+            passwordError.textContent = '';
+        }
+
+        function showError(inputId, errorId, message) {
+            const input = document.getElementById(inputId);
+            const errorDiv = document.getElementById(errorId);
+
+            input.classList.add('error');
+            errorDiv.textContent = message;
+            errorDiv.classList.add('show');
+        }
+
         function handleLogin(event) {
             event.preventDefault();
             
-            const userIdInput = document.getElementById('userId');
-            const userId = userIdInput.value.trim();
-            const password = document.getElementById('password').value.trim();
+            clearErrors();
 
-            // Reset error styling
-            userIdInput.classList.remove('error');
+            const userIdInput = document.getElementById('userId');
+            const passwordInput = document.getElementById('password');
+            const userId = userIdInput.value.trim();
+            const password = passwordInput.value.trim();
+
+            let hasError = false;
 
             // Validate User ID format
             if (!userId) {
-                alert('Please enter your User ID.');
-                userIdInput.classList.add('error');
-                return;
-            }
-
-            if (!validateUserIdFormat(userId)) {
-                alert('User ID is incorrect');
-                userIdInput.classList.add('error');
-                return;
+                showError('userId', 'userIdError', 'Please enter your User ID.');
+                hasError = true;
+            } else if (!validateUserIdFormat(userId)) {
+                showError('userId', 'userIdError', 'User ID format incorrect. Use XXX-XXXX format.');
+                hasError = true;
             }
 
             // Validate password
             if (!password) {
-                alert('Please enter your password.');
-                return;
+                showError('password', 'passwordError', 'Please enter your password.');
+                hasError = true;
+            } else if (password.length < 6) {
+                showError('password', 'passwordError', 'Password must be at least 6 characters long.');
+                hasError = true;
             }
 
-            if (password.length < 6) {
-                alert('Password must be at least 6 characters long.');
+            if (hasError) {
                 return;
             }
 
@@ -273,7 +309,7 @@
             localStorage.setItem('loggedInUser', userId);
             localStorage.setItem('loginTime', new Date().toISOString());
 
-            // Redirect to home page
+            // Show success message and redirect
             alert('Login successful! Welcome back, ' + userId + '.');
             window.location.href = 'index.html';
         }
